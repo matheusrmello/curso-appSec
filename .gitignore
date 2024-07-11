@@ -6,4 +6,5 @@ build/
 temp/
 db_data/
 database/
-mysql
+mysql/
+result-trufflehog.txt
