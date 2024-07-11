@@ -24,12 +24,7 @@ jobs:
         
             - name: Create issue
               run: |
-                echo
-                if [[ $trufflehog_output == *"Found unverified result 🐷🔑❓"* || "trufflehog_output" == *"Found verified result 🐷🔑❓"* ]]; then
-
-                info=$(echo "$trufflehog_output" | grep -oP '(?<=Commit: ).*')
-                issue_body="Secrets encontradas pelo TruffleHog, com as seguintes informações:\n $info"
-
+                if [[ "$trufflehog_output" == *"Found unverified result 🐷🔑❓"* || "$trufflehog_output" == *"Found verified result 🐷🔑❓"* ]]; then
 
                     curl -L \
                         -H "Accept: application/vnd.github+json" \
@@ -39,5 +34,6 @@ jobs:
                         -d '{"title":"TruffleHog Found a secret","body":"I'\''m having a problem with this.","assignees":["octocat"],"milestone":1,"labels":["bug"]}'
                     exit 1
                 fi
+
               env:
-                trufflehog_output: ${{ steps.trufflehog.outputs.trufflehog_output }}
+                  trufflehog_output: ${{ steps.trufflehog.outputs.trufflehog_output }}  
